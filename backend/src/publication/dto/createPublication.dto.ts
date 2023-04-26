@@ -1,13 +1,20 @@
-import { IsNotEmpty } from "class-validator";
-import { VehicleDto } from "src/vehicle/dto/vehicle.dto";
-
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
+import { CreateVehicleDto } from 'src/vehicle/dto/createVehicle.dto';
 export class CreatePublicationDto {
-    @IsNotEmpty()
-    publicationTitle: string;
+  @ApiProperty({
+    description: 'publication title',
+  })
+  @IsNotEmpty()
+  publicationTitle: string;
 
-    @IsNotEmpty()
-    publicationDescription: string;
+  @ApiProperty({
+    description: `publication description`,
+  })
+  @IsNotEmpty()
+  publicationDescription: string;
 
-    @IsNotEmpty()
-    vehicle: VehicleDto
+  @ApiProperty({ type: () => CreateVehicleDto })
+  @IsNotEmpty()
+  vehicle: CreateVehicleDto;
 }

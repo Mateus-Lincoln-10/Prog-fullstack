@@ -1,18 +1,18 @@
-import { IsHexColor, IsNotEmpty } from "class-validator";
+import { IsHexColor, IsNotEmpty } from 'class-validator';
 
 export class VehicleDto {
-    @IsNotEmpty()
-    vehicleId: string;
+  @IsNotEmpty()
+  vehicleId: string;
 
-    @IsNotEmpty()
-    vehiclePlate: string;
+  @IsNotEmpty()
+  vehiclePlate: string;
 
-    @IsHexColor()
-    vehicleColor: string;
+  @IsHexColor()
+  vehicleColor: string;
 
-    @IsNotEmpty()
-    vehicleModel: string;
+  @IsNotEmpty()
+  vehicleModel: string;
 
-    @IsNotEmpty()
-    vehicleBrand: string;
+  @IsNotEmpty()
+  vehicleBrand: string;
 }

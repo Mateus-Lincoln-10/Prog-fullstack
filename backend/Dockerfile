@@ -2,14 +2,14 @@ FROM node:16
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 9001
 
-CMD ["npm", "run", "start:prod"]
+CMD ["yarn", "start:prod"]

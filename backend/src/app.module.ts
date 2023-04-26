@@ -3,14 +3,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LoginEntity } from './login/login.entity';
 import { VehicleModule } from './vehicle/vehicle.module';
-import { VehicleEntity } from './vehicle/vehicle.entity';
 import { PublicationModule } from './publication/publication.module';
 
 @Module({
-  imports: [PublicationModule,
-VehicleModule,
+  imports: [
+    PublicationModule,
+    VehicleModule,
 
     TypeOrmModule.forRoot({
       type: 'postgres',

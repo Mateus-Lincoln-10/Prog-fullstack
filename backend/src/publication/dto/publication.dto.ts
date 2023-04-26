@@ -1,12 +1,12 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class PublicationDto {
-    @IsNotEmpty()
-    publicationId: string;
+  @IsNotEmpty()
+  publicationId: string;
 
-    @IsNotEmpty()
-    publicationTitle: string;
+  @IsNotEmpty()
+  publicationTitle: string;
 
-    @IsNotEmpty()
-    publicationDescription: string;
+  @IsNotEmpty()
+  publicationDescription: string;
 }
