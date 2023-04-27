@@ -1,20 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
-import useAuth from "../../hooks/useAuth";
 import * as C from "./styles";
 import Header from "../../components/Home/header";
 import Logo from "../../images/logo.png";
 import ExpandMore from "../../images/expand_more.svg"
 
 const Home = () => {
-  const { signout } = useAuth();
   const navigate = useNavigate();
 
   return (
     <C.Container>
-    
-
       <div className="banner">
         <p>$7,500 tax credit for Model Y and Model 3. Model 3 RWD credit reducing to $3,750 on April 18. <a className="learnMore" href="">Learn More</a></p>
       </div>
@@ -62,9 +57,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-//<C.Title>Home</C.Title>
-//<Button Text="Sair" onClick={() => [signout(), navigate("/")]}>
-//  Sair
-// </Button>

@@ -25,7 +25,7 @@ export class LoginService {
     }
 
     const userLogged = { sub: user.loginId, email: user.loginEmail };
-    return await this.jwtService.signAsync(userLogged);
+    return {accessToken: await this.jwtService.signAsync(userLogged)}
   }
 
   async register(register: CreateAccountDto) {

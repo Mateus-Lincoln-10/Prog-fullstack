@@ -9,10 +9,11 @@ import {
 } from '@nestjs/common';
 import { PublicationService } from './publication.service';
 import { CreatePublicationDto } from './dto/createPublication.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/login/guards/auth.guard';
 
 @ApiTags('Publication Controller')
+@ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
 @Controller()
 export class PublicationController {
@@ -30,7 +31,7 @@ export class PublicationController {
   @HttpCode(200)
   @ApiOkResponse({ description: 'Publications retrieved successfully' })
   @Get('/publication')
-  async getPublicationList(@Query('search') search: string) {
+  async getPublicationList(@Query('search') search?: string) {
     return this.publicationService.getPublicationList(search);
   }
 }
