@@ -1,15 +1,21 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import useAuth from "../../hooks/useAuth";
 import * as C from "./styles";
 import Header from "../../components/Home/header";
 import Logo from "../../images/logo.png";
-import ExpandMore from "../../images/expand_more.svg"
+import ExpandMore from "../../images/expand_more.svg";
+import Bg from "../../images/background.png";
+
 
 const Home = () => {
   const { signout } = useAuth();
   const navigate = useNavigate();
+
+  const Publication = () => {
+    navigate("/publication");
+  };
 
   return (
     <C.Container>
@@ -22,6 +28,8 @@ const Home = () => {
 
       <div className="content">
         
+        
+        <img className="bg" src={Bg} alt="Logo tesla" />
         <header className="styleHeader">
           <img className="logo" src={Logo} alt="Logo tesla" />
 
@@ -51,9 +59,10 @@ const Home = () => {
         </div>
 
         <div className="buttons">
-          <button className="orderNow"> Order now </button>
+          <Link  className="orderNow" to="/publication">&nbsp;Publicar veículo</Link>
           <button className="demoDrive"> Demmo drive </button>
         </div>
+        
 
         <img className="expandMore" src={ExpandMore} alt="Icon" />
       </div> 
