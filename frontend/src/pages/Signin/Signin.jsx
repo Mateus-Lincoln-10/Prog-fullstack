@@ -13,6 +13,11 @@ const Signin = () => {
   const [error, setError] = useState("");
 
   const handleLogin = () => {
+    if (!email || !senha) {
+      setError("Preencha todos os campos");
+      return;
+    }
+
     api
         .post('/login', {
           email,
