@@ -75,6 +75,12 @@ export const Container = styled.div`
   height: 1rem;
   margin-right: 5rem;
 }
+.bg {
+  position: absolute;
+  z-index: -1;
+  width: 100vw;
+  height: 92vh;
+}
 
 .styleHeader {
   position: absolute;
@@ -143,6 +149,11 @@ export const Container = styled.div`
   line-height: 20px;
 }
 
+.orderNow:hover{
+  color: blue;
+  cursor: pointer;
+}
+
 .demoDrive {
   border: none;
   border-radius: 4px;
@@ -157,7 +168,7 @@ export const Container = styled.div`
 }
 
 .expandMore {
-  margin-left: 50vw;
+  margin-left: 49vw;
   margin-top: 2rem;
   width: 32px;
   height: 32px;
