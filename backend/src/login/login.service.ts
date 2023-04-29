@@ -21,7 +21,7 @@ export class LoginService {
     });
 
     if (!user || !(await bcrypt.compare(login.password, user.loginPassword))) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Email ou senha Inválidos");
     }
 
     const userLogged = { sub: user.loginId, email: user.loginEmail };
