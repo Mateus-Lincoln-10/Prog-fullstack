@@ -3,19 +3,14 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
-const Signup = () => {
+const PublicationVehicle = () => {
   const [publicationTitle, setPublicationTitle] = useState("");
   const [publicationDescription, setPublicationDescription] = useState("");
   const [vehiculoPlate, setVehiculoPlate] = useState("");
   const [vehiculoColor, setVehiculoColor] = useState("");
   const [vehiculoModel, setVehiculoModel] = useState("");
   const [vehiculoBrand, setVehiculoBrand] = useState("");
-  const navigate = useNavigate();
-
-  const { signup } = useAuth();
-
 
   return (
     <C.Container>
@@ -63,4 +58,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default PublicationVehicle;

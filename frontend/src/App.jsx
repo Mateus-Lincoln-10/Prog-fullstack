@@ -1,7 +1,7 @@
 import React from "react";
-import RoutesApp from "./routes";
-import { AuthProvider } from "./contexts/auth";
+import RoutesApp from "./routes/Routes";
 import GlobalStyle from "./styles/global";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => (
   <AuthProvider>

@@ -21,11 +21,11 @@ export class LoginService {
     });
 
     if (!user || !(await bcrypt.compare(login.password, user.loginPassword))) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Email ou senha Inválidos");
     }
 
     const userLogged = { sub: user.loginId, email: user.loginEmail };
-    return await this.jwtService.signAsync(userLogged);
+    return {accessToken: await this.jwtService.signAsync(userLogged)}
   }
 
   async register(register: CreateAccountDto) {
