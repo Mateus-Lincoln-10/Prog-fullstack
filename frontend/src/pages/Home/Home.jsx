@@ -1,6 +1,7 @@
 import React from "react";
 import * as C from "./styles";
 import Header from "../../components/Home/header";
+import Background from "../../images/background.png";
 import Logo from "../../images/logo.png";
 import ExpandMore from "../../images/expand_more.svg"
 import { Link } from 'react-router-dom';
@@ -15,6 +16,7 @@ const Home = () => {
 
       <div className="content">
 
+      <img className="bg" src={Background} alt="Logo tesla" />
         <header className="styleHeader">
           <img className="logo" src={Logo} alt="Logo tesla" />
 
@@ -36,7 +38,7 @@ const Home = () => {
 
             <span className="buttonMenu">Menu</span>
           </div>
-        </header>
+          </header>
 
         <div className="title-subTitle">
           <p className="title"> Model Y </p>
@@ -44,8 +46,8 @@ const Home = () => {
         </div>
 
         <div className="buttons">
-          <Link to="/publication" className="orderNow"> Order now </Link>
-          <button className="demoDrive"> Demmo drive </button>
+          <Link to="/publication" className="orderNow"> Publicar veículo </Link>
+          <Link to="/searchVehicle" className="demoDrive"> Pesquisar veículos </Link>
         </div>
 
         <img className="expandMore" src={ExpandMore} alt="Icon" />

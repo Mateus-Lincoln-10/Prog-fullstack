@@ -3,6 +3,7 @@ import Home from "../pages/Home/Home";
 import Signin from "../pages/Signin/Signin";
 import Signup from "../pages/Signup/Signup";
 import PublicationVehicle from "../pages/PublicationVehicle/PublicationVehicle";
+import SearchVehicle from "../pages/SearchVehicle/SearchVehicle";
 import { useAuth } from "../hooks/useAuth";
 import { Fragment } from "react";
 
@@ -22,6 +23,7 @@ const RoutesApp = () => {
         <Route  element={<PrivateRoute/>}>
           <Route path="/home" element={<Home />} />
           <Route path="/publication" element={<PublicationVehicle />} />
+          <Route path="/searchVehicle" element={<SearchVehicle />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>

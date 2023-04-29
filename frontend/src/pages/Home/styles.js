@@ -88,7 +88,6 @@ export const Container = styled.div`
   justify-content: center;
   gap: 5rem;
   padding: 1rem;
-  height: 86vh;
   width: 100%;
   font-family: Gotham SSm;
   font-weight: 500;
@@ -141,7 +140,9 @@ export const Container = styled.div`
   border-radius: 4px;
   width: 18%;
   height: 40px;
-  padding: 4px 24px;
+  padding-top: 0.6rem;
+  padding-left: 4rem;
+  text-decoration: none;
   color: #fff;
   background-color: rgba(23, 26, 32, 0.8);
   font-weight: 700;
@@ -149,17 +150,14 @@ export const Container = styled.div`
   line-height: 20px;
 }
 
-.orderNow:hover{
-  color: blue;
-  cursor: pointer;
-}
-
 .demoDrive {
   border: none;
   border-radius: 4px;
   width: 18%;
   height: 40px;
-  padding: 4px 24px;
+  padding-top: 0.6rem;
+  padding-left: 4rem;
+  text-decoration: none;
   color: #393c41;
   background-color: rgba(244, 244, 244, 0.65);
   font-weight: 700;
