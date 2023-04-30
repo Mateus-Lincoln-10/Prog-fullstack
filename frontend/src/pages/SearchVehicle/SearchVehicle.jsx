@@ -23,7 +23,7 @@ const SearchVehicle = () => {
       });
 
       if(response.data.length === 0) {
-        toast.warning('No Vehicle Found',  {
+        toast.warning(response.data.message,  {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -54,7 +54,6 @@ const SearchVehicle = () => {
 
   const cardList = useMemo(() => {
     if(vehicleList.length === 0) {
-      
       return;
     }
     return vehicleList.map(handleCards);
