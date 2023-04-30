@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import * as C from "./styles";
 import api from '../../services/api'
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -22,16 +23,26 @@ const Signup = () => {
     }
 
     api.post('/register', {email, password: senha}).then(res => {
-      alert("Usuário cadatrado com sucesso!");
-      navigate("/");
+          navigate("/");
 
     }).catch(e => {
-      setError(e);
+      console.log(e);
+      toast.error(e.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored"
+        });
     })
   };
 
   return (
     <C.Container>
+      <ToastContainer />
       <C.Label>SISTEMA DE LOGIN</C.Label>
       <C.Content>
         <Input

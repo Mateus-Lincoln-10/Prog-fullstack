@@ -32,7 +32,7 @@ export class VehicleService {
         },
       });
       if (vehicles.length === 0) {
-        throw new HttpException('No vehicle found', HttpStatus.NOT_FOUND);
+        throw new HttpException('No vehicle found', HttpStatus.NO_CONTENT);
       }
       return vehicles.map((e) => this.assembler.toModelDto(e));
     } catch (error) {

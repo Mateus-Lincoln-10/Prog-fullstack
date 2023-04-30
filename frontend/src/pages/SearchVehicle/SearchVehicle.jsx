@@ -10,8 +10,6 @@ const SearchVehicle = () => {
   const [vehicleList, setVehicleList] = useState([]);
   const { isLogged } = useAuth()
 
-  console.log(vehicleList);
-
   const handleSearch = async () => {
     try {
       const response = await api.get('/vehicle', {
