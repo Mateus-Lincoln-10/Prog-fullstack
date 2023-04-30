@@ -4,13 +4,12 @@ import Button from "../../components/Button";
 import * as C from "./styles";
 import api from './../../services/api';
 import { useAuth } from "../../hooks/useAuth";
+import { toast, ToastContainer } from 'react-toastify';
 
 const SearchVehicle = () => {
   const [searchVehicle, setSearchVehicle] = useState("");
   const [vehicleList, setVehicleList] = useState([]);
   const { isLogged } = useAuth()
-
-  console.log(vehicleList);
 
   const handleSearch = async () => {
     try {
@@ -22,6 +21,19 @@ const SearchVehicle = () => {
           search: searchVehicle
         }
       });
+
+      if(response.data.length === 0) {
+        toast.warning(response.data.message,  {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "light"
+          })
+      }
 
       setVehicleList(response.data)
     } catch(e) {
@@ -41,11 +53,15 @@ const SearchVehicle = () => {
   }, [searchVehicle]);
 
   const cardList = useMemo(() => {
+    if(vehicleList.length === 0) {
+      return;
+    }
     return vehicleList.map(handleCards);
   }, [vehicleList]);
 
   return (
     <C.Container>
+      <ToastContainer />
       <C.Label>Pesquisa de veiculo</C.Label>
       <C.Content>
         <Input

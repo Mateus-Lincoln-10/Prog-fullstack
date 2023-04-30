@@ -33,7 +33,7 @@ export class LoginService {
   }
 
   async register(register: CreateAccountDto) {
-    this.validateUniqueEmail(register);
+    await this.validateUniqueEmail(register);
 
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(register.password, saltOrRounds);
@@ -43,18 +43,18 @@ export class LoginService {
     login.loginEmail = register.email;
     login.loginPassword = hash;
 
-    return this.loginRepository.save(login);
+    await this.loginRepository.save(login);
+
+    return { message: 'Account created successfully' };
   }
 
-  private validateUniqueEmail(login: CreateAccountDto) {
-    this.loginRepository
-      .findOneBy({
-        loginEmail: login.email,
-      })
-      .then((e) => {
-        if (e) {
-          throw new ConflictException('Email already exists');
-        }
-      });
+  private async validateUniqueEmail(login: CreateAccountDto) {
+    const existingUser = await this.loginRepository.findOneBy({
+      loginEmail: login.email,
+    });
+
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { LoginRequest } from './dto/login.request.dto';
 import { LoginService } from './login.service';
 import {
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiResponse,
@@ -42,9 +43,25 @@ export class LoginController {
   }
 
   @Post('/register')
-  @ApiCreatedResponse({ description: 'Account created successfully' })
+  @ApiCreatedResponse({
+    description: 'Account created successfully',
+    schema: {
+      example: {
+        message: 'Account created successfully',
+      },
+    },
+  })
+  @ApiConflictResponse({
+    description: 'Conflict',
+    schema: {
+      example: {
+        statusCode: 409,
+        message: 'Email already in use',
+      },
+    },
+  })
   @HttpCode(201)
-  register(@Body() register: CreateAccountDto) {
-    return this.loginService.register(register);
+  async register(@Body() register: CreateAccountDto) {
+    return await this.loginService.register(register);
   }
 }

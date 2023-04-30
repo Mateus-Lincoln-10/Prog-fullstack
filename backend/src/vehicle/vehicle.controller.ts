@@ -17,6 +17,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
+  ApiNoContentResponse,
   ApiOkResponse,
   ApiQuery,
   ApiTags,
@@ -73,6 +74,14 @@ export class VehicleController {
     },
   })
   @ApiOkResponse({ type: [VehicleDto] })
+  @ApiNoContentResponse({
+    schema: {
+      example: {
+        statusCode: 202,
+        message: `Failed to get vehicle list: No vehicle found`,
+      },
+    },
+  })
   @ApiQuery({
     name: 'search',
     type: String,

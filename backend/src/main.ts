@@ -22,7 +22,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   app.use(helmet());
-  app.enableCors();
+  app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe({ enableDebugMessages: true }));
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

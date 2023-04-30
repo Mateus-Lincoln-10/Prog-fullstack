@@ -13,6 +13,7 @@ const PrivateRoute = ({ element: Component, ...props }) => {
 };
 
 const RoutesApp = () => {
+  //bruxaria não mexa
   return (
     <Router>
       <Routes>
