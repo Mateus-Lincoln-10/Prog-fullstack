@@ -28,7 +28,6 @@ export class LoginController {
       },
     },
   })
-
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
     schema: {

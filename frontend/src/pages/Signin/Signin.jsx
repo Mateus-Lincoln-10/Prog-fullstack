@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
-import api from '../../services/api'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -43,7 +42,6 @@ const Signin = () => {
         await login(email, password);
         navigate("/home");
       } catch (error) {
-        console.log(error);
         setError(error.message)
       }
     }

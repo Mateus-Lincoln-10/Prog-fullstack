@@ -1,18 +1,18 @@
-import { IsHexColor, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class VehicleDto {
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Vehicle Id', example: 1 })
   vehicleId: string;
 
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Vehicle Plate', example: 'GTR-1440' })
   vehiclePlate: string;
 
-  @IsHexColor()
+  @ApiProperty({ description: 'Vehicle color Hex', example: '#fff' })
   vehicleColor: string;
 
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Vehicle model name', example: 'Sentra' })
   vehicleModel: string;
 
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Vehicle brand name', example: 'Nissan' })
   vehicleBrand: string;
 }

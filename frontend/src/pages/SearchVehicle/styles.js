@@ -46,3 +46,55 @@ export const Strong = styled.strong`
     color: #676767;
   }
 `;
+
+export const Title = styled.h1`
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 30px;
+/* identical to box height */
+
+
+color: #676767;
+`;
+
+export const Card = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 40px;
+gap: 10px;
+
+width: 299px;
+height: 200px;
+
+background: #FFFFFF;
+box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+border-radius: 4px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+`;
+
+export const CardContainer = styled.div`
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+padding: 0px;
+gap: 20px;
+margin: 0 auto;
+
+width: 1000px;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+`

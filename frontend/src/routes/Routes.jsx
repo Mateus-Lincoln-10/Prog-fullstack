@@ -5,12 +5,10 @@ import Signup from "../pages/Signup/Signup";
 import PublicationVehicle from "../pages/PublicationVehicle/PublicationVehicle";
 import SearchVehicle from "../pages/SearchVehicle/SearchVehicle";
 import { useAuth } from "../hooks/useAuth";
-import { Fragment } from "react";
 
 const PrivateRoute = ({ element: Component, ...props }) => {
   const { isLogged } = useAuth();
 
-  console.log(isLogged());
   return isLogged() ? <Outlet /> : <Navigate to="/"/>
 };
 
@@ -23,7 +21,7 @@ const RoutesApp = () => {
         <Route  element={<PrivateRoute/>}>
           <Route path="/home" element={<Home />} />
           <Route path="/publication" element={<PublicationVehicle />} />
-          <Route path="/searchVehicle" element={<SearchVehicle />} />
+          <Route path="/search-vehicle" element={<SearchVehicle />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
