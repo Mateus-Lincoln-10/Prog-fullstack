@@ -1,5 +1,9 @@
 import * as bcrypt from 'bcrypt';
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LoginEntity } from './login.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -21,22 +25,36 @@ export class LoginService {
     });
 
     if (!user || !(await bcrypt.compare(login.password, user.loginPassword))) {
-      throw new UnauthorizedException("Email ou senha Inválidos");
+      throw new UnauthorizedException('Email ou senha Inválidos');
     }
 
     const userLogged = { sub: user.loginId, email: user.loginEmail };
-    return {accessToken: await this.jwtService.signAsync(userLogged)}
+    return { accessToken: await this.jwtService.signAsync(userLogged) };
   }
 
   async register(register: CreateAccountDto) {
+    this.validateUniqueEmail(register);
+
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(register.password, saltOrRounds);
 
-    let login: LoginEntity = new LoginEntity();
+    const login: LoginEntity = new LoginEntity();
 
     login.loginEmail = register.email;
     login.loginPassword = hash;
 
     return this.loginRepository.save(login);
+  }
+
+  private validateUniqueEmail(login: CreateAccountDto) {
+    this.loginRepository
+      .findOneBy({
+        loginEmail: login.email,
+      })
+      .then((e) => {
+        if (e) {
+          throw new ConflictException('Email already exists');
+        }
+      });
   }
 }

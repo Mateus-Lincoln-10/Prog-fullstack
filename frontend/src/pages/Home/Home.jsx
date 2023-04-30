@@ -47,7 +47,7 @@ const Home = () => {
 
         <div className="buttons">
           <Link to="/publication" className="orderNow"> Publicar veículo </Link>
-          <Link to="/searchVehicle" className="demoDrive"> Pesquisar veículos </Link>
+          <Link to="/search-vehicle" className="demoDrive"> Pesquisar veículos </Link>
         </div>
 
         <img className="expandMore" src={ExpandMore} alt="Icon" />

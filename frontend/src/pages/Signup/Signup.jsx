@@ -26,7 +26,6 @@ const Signup = () => {
       navigate("/");
 
     }).catch(e => {
-      console.log(e)
       setError(e);
     })
   };

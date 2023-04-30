@@ -1,7 +1,7 @@
 function Header(props) {
   return (
     <div>
-      <a className="">{props.optionHeader}</a>
+      <header>{props.optionHeader}</header>
     </div>
   )
 }

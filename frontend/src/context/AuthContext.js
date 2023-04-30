@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
       const { accessToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       setUser({ accessToken });
-      console.log(user);
     } catch (error) {
         throw new Error("Email ou senha inválidos");
     }
