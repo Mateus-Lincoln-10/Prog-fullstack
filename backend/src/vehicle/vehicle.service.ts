@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VehicleEntity } from './entities/vehicle.entity';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleAssembler } from './vehicleAssembler.service';
 import { VehicleDto } from './dto/vehicle.dto';
@@ -28,7 +28,7 @@ export class VehicleService {
     try {
       const vehicles = await this.repo.find({
         where: {
-          vehicleModel: Like(`%${search}%`),
+          vehicleModel: ILike(`%${search}%`),
         },
       });
       if (vehicles.length === 0) {
