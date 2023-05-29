@@ -25,7 +25,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/login/guards/auth.guard';
 import { VehicleDto } from './dto/vehicle.dto';
-import { VehicleEntity } from './entities/vehicle.entity';
+import { VehicleEntity } from './dto/vehicle.entity';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)

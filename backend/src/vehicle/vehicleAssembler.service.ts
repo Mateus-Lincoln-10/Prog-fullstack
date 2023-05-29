@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { VehicleEntity } from './entities/vehicle.entity';
+import { VehicleEntity } from './dto/vehicle.entity';
 import { VehicleDto } from './dto/vehicle.dto';
 
 @Injectable()

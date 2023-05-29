@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package vehicle;
+
+service VehicleService {
+  rpc createVehicle(CreateVehicle) returns (Vehicle) {}
+  rpc listVehicles(Empty) returns (ListVehicleResponse) {}
+}
+
+message CreateVehicle {
+  string vehiclePlate = 1;
+  string vehicleColor = 2;
+  string vehicleModel = 3;
+  string vehicleBrand = 4;
+  string vehicleYear = 5;
+}
+
+message Vehicle {
+  string vehicleId = 1;
+  string vehiclePlate = 2;
+  string vehicleColor = 3;
+  string vehicleModel = 4;
+  string vehicleBrand = 5;
+  string vehicleYear = 6;
+}
+
+message ListVehicleResponse {
+  repeated Vehicle vehicles = 1;
+}
+
+message Empty {}

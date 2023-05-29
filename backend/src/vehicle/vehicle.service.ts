@@ -1,44 +1,30 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { VehicleEntity } from './entities/vehicle.entity';
-import { ILike, Like, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
-import { VehicleAssembler } from './vehicleAssembler.service';
 import { VehicleDto } from './dto/vehicle.dto';
+import { Client, ClientGrpc } from '@nestjs/microservices';
+import { grpcVehicleOptions } from './grpc-vehicle.options';
+import { Observable } from 'rxjs';
 
+interface RpcService {
+  createVehicle(createVehicle: CreateVehicleDto): Observable<VehicleDto[]>;
+  listVehicles(): Observable<VehicleDto[]>;
+}
 @Injectable()
 export class VehicleService {
-  constructor(
-    @InjectRepository(VehicleEntity)
-    private readonly repo: Repository<VehicleEntity>,
-    private readonly assembler: VehicleAssembler,
-  ) {}
+  private rpcService: RpcService;
 
-  async save(vehicle: CreateVehicleDto): Promise<VehicleEntity> {
-    const vehicleEntity: VehicleEntity = new VehicleEntity();
-    vehicleEntity.vehicleBrand = vehicle.vehicleBrand;
-    vehicleEntity.vehicleColor = vehicle.vehicleColor;
-    vehicleEntity.vehicleModel = vehicle.vehicleModel;
-    vehicleEntity.vehiclePlate = vehicle.vehiclePlate;
+  @Client(grpcVehicleOptions)
+  private client: ClientGrpc;
 
-    return await this.repo.save(vehicleEntity);
+  onModuleInit() {
+    this.rpcService = this.client.getService<RpcService>('VehicleService');
   }
 
-  async getVehicleList(search: string): Promise<VehicleDto[]> {
-    try {
-      const vehicles = await this.repo.find({
-        where: {
-          vehicleModel: ILike(`%${search}%`),
-        },
-      });
-      if (vehicles.length === 0) {
-        throw new HttpException('No vehicle found', HttpStatus.NO_CONTENT);
-      }
-      return vehicles.map((e) => this.assembler.toModelDto(e));
-    } catch (error) {
-      Logger.error(error);
-      Logger.error(`Failed to get vehicle list: ${error.message}`);
-      throw error;
-    }
+  async createVehicle(creteVehicle: CreateVehicleDto) {
+    return this.rpcService.createVehicle(creteVehicle);
+  }
+
+  async listVehicles() {
+    return this.rpcService.listVehicles();
   }
 }
