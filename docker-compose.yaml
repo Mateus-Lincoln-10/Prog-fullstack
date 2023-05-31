@@ -1,15 +1,39 @@
 version: '3'
+
 services:
+  
   db-auth:
     image: postgres
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: auth
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: test
+      POSTGRES_DB: auth
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-auth:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  db-vehicle:
+    image: postgres
+    environment:
+      POSTGRES_USER: vehicle
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: vehicle
+    volumes:
+      - db-vehicle:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  db-report:
+    image: postgres
+    environment:
+      POSTGRES_USER: report
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: report
+    volumes:
+      - db-report:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"    
 
   api:
     build: ./backend
@@ -45,5 +69,7 @@ networks:
   mynetwork:
 
 volumes:
-  db-data:
+  db-auth:
+  db-vehicle:
+  db-report:
   rabbit:
