@@ -1,7 +1,6 @@
 version: '3'
-
 services:
-  db:
+  db-auth:
     image: postgres
     environment:
       POSTGRES_USER: root
@@ -16,8 +15,6 @@ services:
     build: ./backend
     ports:
       - "9001:9001"
-    depends_on:
-      - db
 
   frontend:
     build: ./frontend
@@ -39,7 +36,7 @@ services:
       - '5672:5672'
       - '15672:15672'
     volumes:
-      - "./data/broker:/var/lib/rabbitmq/mnesia"
+      - "rabbit:/var/lib/rabbitmq/mnesia"
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=123456
@@ -49,3 +46,4 @@ networks:
 
 volumes:
   db-data:
+  rabbit:
