@@ -5,6 +5,6 @@ export const grpcReportOptions: ClientOptions = {
   transport: Transport.GRPC,
   options: {
     package: 'report',
-    protoPath: join(__dirname, 'report.proto'),
+    protoPath: join(__dirname, '../report/report.proto'),
   },
 };
