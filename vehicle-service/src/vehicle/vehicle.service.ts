@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VehicleEntity } from './entities/vehicle.entity';
-import { ILike, Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleAssembler } from './vehicleAssembler.service';
 import { VehicleDto } from './dto/vehicle.dto';
@@ -14,14 +14,16 @@ export class VehicleService {
     private readonly assembler: VehicleAssembler,
   ) {}
 
-  async save(vehicle: CreateVehicleDto): Promise<VehicleEntity> {
+  async createVehicle(vehicle: CreateVehicleDto): Promise<VehicleDto> {
     const vehicleEntity: VehicleEntity = new VehicleEntity();
     vehicleEntity.vehicleBrand = vehicle.vehicleBrand;
     vehicleEntity.vehicleColor = vehicle.vehicleColor;
     vehicleEntity.vehicleModel = vehicle.vehicleModel;
     vehicleEntity.vehiclePlate = vehicle.vehiclePlate;
+    vehicleEntity.vehicleYear = vehicle.vehicleYear;
 
-    return await this.repo.save(vehicleEntity);
+    const newVehicle = await this.repo.save(vehicleEntity);
+    return this.assembler.toModelDto(newVehicle);
   }
 
   async getVehicleList(search: string): Promise<VehicleDto[]> {
