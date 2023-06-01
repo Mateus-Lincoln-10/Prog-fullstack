@@ -24,4 +24,7 @@ export class VehicleEntity {
 
   @CreateDateColumn({ name: 'vehicle_created_at', type: 'timestamp' })
   vehicleCreatedAt: string;
+
+  @Column({ name: 'vehicle_year' })
+  vehicleYear: string;
 }

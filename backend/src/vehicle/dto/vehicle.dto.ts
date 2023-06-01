@@ -15,4 +15,7 @@ export class VehicleDto {
 
   @ApiProperty({ description: 'Vehicle brand name', example: 'Nissan' })
   vehicleBrand: string;
+
+  @ApiProperty({ description: 'Vehicle fabrication year', example: '2009' })
+  vehicleYear: string;
 }

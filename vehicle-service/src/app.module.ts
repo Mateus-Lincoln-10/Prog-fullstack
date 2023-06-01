@@ -1,24 +1,22 @@
-import { ReportModule } from './report/report.module';
-import { LoginModule } from './login/login.module';
 import { Module } from '@nestjs/common';
-import { VehicleModule } from './vehicle/vehicle.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { VehicleModule } from './vehicle/vehicle.module';
 
 @Module({
   imports: [
+    VehicleModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
-      username: 'auth',
+      port: 5433,
+      username: 'vehicle',
       password: 'root',
-      database: 'auth',
+      database: 'vehicle',
       entities: [__dirname + `/**/*.entity{.js, .ts}`],
       synchronize: true,
     }),
-    ReportModule,
-    VehicleModule,
-    LoginModule,
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

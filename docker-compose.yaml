@@ -1,24 +1,44 @@
 version: '3'
 
 services:
-  db:
+  
+  db-auth:
     image: postgres
-    restart: always
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: auth
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: test
+      POSTGRES_DB: auth
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-auth:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  db-vehicle:
+    image: postgres
+    environment:
+      POSTGRES_USER: vehicle
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: vehicle
+    volumes:
+      - db-vehicle:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  db-report:
+    image: postgres
+    environment:
+      POSTGRES_USER: report
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: report
+    volumes:
+      - db-report:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"    
 
   api:
     build: ./backend
     ports:
       - "9001:9001"
-    depends_on:
-      - db
 
   frontend:
     build: ./frontend
@@ -26,6 +46,30 @@ services:
       - "3000:3000"
     depends_on:
       - api
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - mynetwork
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - "rabbit:/var/lib/rabbitmq/mnesia"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+
+networks:
+  mynetwork:
 
 volumes:
-  db-data:
+  db-auth:
+  db-vehicle:
+  db-report:
+  rabbit:

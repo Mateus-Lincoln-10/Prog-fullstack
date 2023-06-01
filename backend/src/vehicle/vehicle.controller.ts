@@ -3,9 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpException,
   HttpStatus,
-  Logger,
   Post,
   Query,
   UseGuards,
@@ -25,7 +23,6 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/login/guards/auth.guard';
 import { VehicleDto } from './dto/vehicle.dto';
-import { VehicleEntity } from './entities/vehicle.entity';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
@@ -61,7 +58,7 @@ export class VehicleController {
   @HttpCode(HttpStatus.CREATED)
   @Post()
   createVehicle(@Body() vehicle: CreateVehicleDto) {
-    return this.vehicleService.save(vehicle);
+    return this.vehicleService.createVehicle(vehicle);
   }
 
   @ApiUnauthorizedResponse({
@@ -90,6 +87,6 @@ export class VehicleController {
   })
   @Get()
   async findAllVehicles(@Query('search') search = '') {
-    return await this.vehicleService.getVehicleList(search);
+    return (await this.vehicleService.listVehicles(search)).vehicles;
   }
 }
