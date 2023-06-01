@@ -29,4 +29,11 @@ export class CreateVehicleDto {
   })
   @IsNotEmpty()
   vehicleBrand: string;
+
+  @ApiProperty({
+    description: 'Vehicle fabrication year',
+    example: '2009',
+  })
+  @IsNotEmpty()
+  vehicleYear: string;
 }

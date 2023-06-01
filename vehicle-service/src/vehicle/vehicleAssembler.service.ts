@@ -4,13 +4,15 @@ import { VehicleDto } from './dto/vehicle.dto';
 
 @Injectable()
 export class VehicleAssembler {
-  toModelDto(vehicle: VehicleEntity) {
-    const vehicleDto: VehicleDto = new VehicleDto();
-    vehicleDto.vehicleId = vehicle.vehicleId;
-    vehicleDto.vehicleBrand = vehicle.vehicleBrand;
-    vehicleDto.vehicleColor = vehicle.vehicleColor;
-    vehicleDto.vehicleModel = vehicle.vehicleModel;
-    vehicleDto.vehiclePlate = vehicle.vehiclePlate;
+  toModelDto(vehicle: VehicleEntity): VehicleDto {
+    const vehicleDto: VehicleDto = {
+      vehicleId: vehicle.vehicleId,
+      vehiclePlate: vehicle.vehiclePlate,
+      vehicleColor: vehicle.vehicleColor,
+      vehicleModel: vehicle.vehicleModel,
+      vehicleBrand: vehicle.vehicleBrand,
+      vehicleYear: vehicle.vehicleYear,
+    };
 
     return vehicleDto;
   }
