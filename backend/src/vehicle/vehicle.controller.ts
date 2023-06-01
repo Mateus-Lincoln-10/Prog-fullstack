@@ -87,6 +87,6 @@ export class VehicleController {
   })
   @Get()
   async findAllVehicles(@Query('search') search = '') {
-    return await this.vehicleService.listVehicles();
+    return (await this.vehicleService.listVehicles(search)).vehicles;
   }
 }

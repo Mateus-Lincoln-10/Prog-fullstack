@@ -4,7 +4,10 @@ import { VehicleService } from './vehicle.service';
 import { VehicleDto } from './dto/vehicle.dto';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable, from } from 'rxjs';
-
+import {
+  ListVehicleResponse,
+  Search,
+} from './interfaces/vehicles-proto.interface';
 @Controller()
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
@@ -14,8 +17,8 @@ export class VehicleController {
     return from(this.vehicleService.createVehicle(createVehicle));
   }
 
-  @Get()
-  async findAllVehicles(@Query('search') search = '') {
-    return await this.vehicleService.getVehicleList(search);
+  @GrpcMethod('VehicleService', 'listVehicles')
+  listVehicles({ search }: Search): Observable<ListVehicleResponse> {
+    return from(this.vehicleService.listVehicles(search));
   }
 }

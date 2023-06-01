@@ -5,9 +5,16 @@ import { Client, ClientGrpc } from '@nestjs/microservices';
 import { grpcVehicleOptions } from './grpc-vehicle.options';
 import { Observable, firstValueFrom } from 'rxjs';
 
+export interface Search {
+  search: string;
+}
+
+export interface ListVehicleResponse {
+  vehicles: VehicleDto[];
+}
 interface RpcService {
   createVehicle(createVehicle: CreateVehicleDto): Observable<VehicleDto>;
-  listVehicles(): Observable<VehicleDto[]>;
+  listVehicles(search: Search): Observable<ListVehicleResponse>;
 }
 @Injectable()
 export class VehicleService {
@@ -24,7 +31,7 @@ export class VehicleService {
     return firstValueFrom(this.rpcService.createVehicle(createVehicle));
   }
 
-  async listVehicles() {
-    return this.rpcService.listVehicles();
+  async listVehicles(search: string) {
+    return firstValueFrom(this.rpcService.listVehicles({ search }));
   }
 }

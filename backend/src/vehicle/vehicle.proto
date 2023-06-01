@@ -4,7 +4,7 @@ package vehicle;
 
 service VehicleService {
   rpc createVehicle(CreateVehicleDto) returns (VehicleDto) {}
-  rpc listVehicles(Empty) returns (ListVehicleResponse) {}
+  rpc listVehicles(Search) returns (ListVehicleResponse) {}
 }
 
 message CreateVehicleDto {
@@ -28,4 +28,6 @@ message ListVehicleResponse {
   repeated VehicleDto vehicles = 1;
 }
 
-message Empty {}
+message Search {
+  string search = 1;
+}

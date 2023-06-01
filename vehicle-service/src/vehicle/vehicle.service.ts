@@ -5,6 +5,7 @@ import { ILike, Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleAssembler } from './vehicleAssembler.service';
 import { VehicleDto } from './dto/vehicle.dto';
+import { ListVehicleResponse } from './interfaces/vehicles-proto.interface';
 
 @Injectable()
 export class VehicleService {
@@ -26,7 +27,7 @@ export class VehicleService {
     return this.assembler.toModelDto(newVehicle);
   }
 
-  async getVehicleList(search: string): Promise<VehicleDto[]> {
+  async listVehicles(search: string): Promise<ListVehicleResponse> {
     try {
       const vehicles = await this.repo.find({
         where: {
@@ -36,7 +37,10 @@ export class VehicleService {
       if (vehicles.length === 0) {
         throw new HttpException('No vehicle found', HttpStatus.NO_CONTENT);
       }
-      return vehicles.map((e) => this.assembler.toModelDto(e));
+      const vehicleList = vehicles.map((e) => this.assembler.toModelDto(e));
+      const vehicleListResponse: ListVehicleResponse = { vehicles: null };
+      vehicleListResponse.vehicles = vehicleList;
+      return vehicleListResponse;
     } catch (error) {
       Logger.error(error);
       Logger.error(`Failed to get vehicle list: ${error.message}`);
