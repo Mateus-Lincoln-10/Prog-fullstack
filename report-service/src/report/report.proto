@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package report;
+
+service ReportService {
+    rpc listReports(Empty) returns (ListReports) {}
+}
+
+message Empty {}
+
+message ListReports {
+    repeated string reportUrl = 1;
+}
