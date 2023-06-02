@@ -1,17 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { Client, ClientGrpc } from '@nestjs/microservices';
+import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { Report } from './report.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { join } from 'path';
+import { VehicleDto } from './vehicle.dto';
 
 export interface ListReportsResponse {
   reportUrl: string[];
 }
 
+export interface Search {
+  search: string;
+}
+
+export interface ListVehicleResponse {
+  vehicles: VehicleDto[];
+}
+
 interface VehicleService {
-  listVehicles(): Observable<any>;
-  listAll(): Observable<ListReportsResponse>;
+  listVehicles(search: Search): Observable<ListVehicleResponse>;
 }
 
 @Injectable()
@@ -22,7 +31,13 @@ export class ReportService {
   ) {}
   private vehicleGrpc: VehicleService;
 
-  @Client()
+  @Client({
+    transport: Transport.GRPC,
+    options: {
+      package: 'vehicle',
+      protoPath: join(__dirname, './vehicle.proto'),
+    },
+  })
   private client: ClientGrpc;
 
   onModuleInit() {
@@ -30,7 +45,7 @@ export class ReportService {
   }
 
   listAllVehicles() {
-    return this.vehicleGrpc.listAll();
+    return this.vehicleGrpc.listVehicles({ search: '' });
   }
 
   async listReports() {
