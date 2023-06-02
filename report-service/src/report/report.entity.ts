@@ -15,4 +15,7 @@ export class Report {
 
   @CreateDateColumn({ name: 'report_created_at', type: 'timestamp' })
   reportCreatedAt: string;
+
+  @Column({ name: 'report_name', unique:true })
+  reportName: string;
 }
