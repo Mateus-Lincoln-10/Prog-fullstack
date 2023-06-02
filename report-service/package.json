@@ -29,8 +29,10 @@
     "@nestjs/typeorm": "^9.0.1",
     "amqp-connection-manager": "^4.1.13",
     "amqplib": "^0.10.3",
+    "aws-sdk": "^2.1390.0",
     "path": "^0.12.7",
     "pg": "^8.11.0",
+    "puppeteer": "^20.5.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.16"
