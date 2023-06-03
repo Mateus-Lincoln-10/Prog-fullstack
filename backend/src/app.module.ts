@@ -4,10 +4,17 @@ import { Module } from '@nestjs/common';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
-
+import type { RedisClientOptions } from 'redis';
+import { redisStore } from 'cache-manager-redis-store';
 @Module({
   imports: [
-    CacheModule.register({ isGlobal: true }),
+    CacheModule.register<RedisClientOptions>({
+      isGlobal: true,
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      ttl: 300,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
