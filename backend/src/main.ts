@@ -4,10 +4,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import * as dotenv from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
+import * as csurf from 'csurf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   dotenv.config();
+  app.use(csurf());
   const config = new DocumentBuilder()
     .addBearerAuth(
       {

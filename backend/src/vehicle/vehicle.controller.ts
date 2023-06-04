@@ -4,9 +4,11 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Post,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleService } from './vehicle.service';
@@ -24,6 +26,8 @@ import {
 import { AuthGuard } from 'src/login/guards/auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { VehicleDto } from './dto/vehicle.dto';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { sanitize } from 'class-sanitizer';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
@@ -58,6 +62,7 @@ export class VehicleController {
     },
   })
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(ThrottlerGuard)
   @Post()
   createVehicle(@Body() vehicle: CreateVehicleDto) {
     return this.vehicleService.createVehicle(vehicle);
@@ -89,6 +94,11 @@ export class VehicleController {
   })
   @Get()
   async findAllVehicles(@Query('search') search = '') {
-    return (await this.vehicleService.listVehicles(search)).vehicles;
+    try {
+      sanitize(search);
+      return (await this.vehicleService.listVehicles(search)).vehicles;
+    } catch (e) {
+      Logger.error('Failed to find vehicles');
+    }
   }
 }
