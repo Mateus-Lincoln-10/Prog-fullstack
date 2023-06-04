@@ -1,6 +1,4 @@
-
 export class ReportTemplate {
-
   getHTML() {
     `
     <!DOCTYPE html>
@@ -64,6 +62,6 @@ export class ReportTemplate {
 
     </body>
     </html>
-    `
+    `;
   }
 }

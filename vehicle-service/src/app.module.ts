@@ -14,6 +14,10 @@ import { VehicleModule } from './vehicle/vehicle.module';
       database: 'vehicle',
       entities: [__dirname + `/**/*.entity{.js, .ts}`],
       synchronize: true,
+      logging: ['error'],
+      extra: {
+        connectionLimit: 5,
+      },
     }),
   ],
   controllers: [],

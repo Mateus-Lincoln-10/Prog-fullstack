@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
-
+import * as puppeteer from 'puppeteer';
 @Injectable()
 export class PdfConverterService {
   async convertToPdf(data: any): Promise<Buffer> {
-    const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome',
-      args: ['--no-sandbox'],
-    });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
 

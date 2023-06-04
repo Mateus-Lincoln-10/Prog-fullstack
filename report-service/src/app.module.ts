@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReportModule } from './report/report.module';
 
@@ -16,9 +14,11 @@ import { ReportModule } from './report/report.module';
       database: 'report',
       entities: [__dirname + `/**/*.entity{.js, .ts}`],
       synchronize: true,
+      logging: ['error'],
+      extra: {
+        connectionLimit: 5,
+      },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

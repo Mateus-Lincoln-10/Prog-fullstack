@@ -35,7 +35,7 @@ export class LoginService {
   async register(register: CreateAccountDto) {
     await this.validateUniqueEmail(register);
 
-    const saltOrRounds = 10;
+    const saltOrRounds = 32;
     const hash = await bcrypt.hash(register.password, saltOrRounds);
 
     const login: LoginEntity = new LoginEntity();
