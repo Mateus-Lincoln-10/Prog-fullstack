@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { ReportService } from './report.service';
+import { ReportService } from './services/report.service';
 import {
   Ctx,
   GrpcMethod,

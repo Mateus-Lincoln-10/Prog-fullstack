@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { Report } from './report.entity';
+import { Report } from '../models/report.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { join } from 'path';
-import { VehicleDto } from './vehicle.dto';
+import { VehicleDto } from '../models/vehicle.dto';
 
 export interface ListReportsResponse {
   reportUrl: string[];
