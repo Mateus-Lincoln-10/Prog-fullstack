@@ -23,6 +23,10 @@ import { redisStore } from 'cache-manager-redis-store';
       password: 'root',
       database: 'auth',
       entities: [__dirname + `/**/*.entity{.js, .ts}`],
+      logging: ['error'],
+      extra: {
+        connectionLimit: 5,
+      },
       synchronize: true,
     }),
     ReportModule,
