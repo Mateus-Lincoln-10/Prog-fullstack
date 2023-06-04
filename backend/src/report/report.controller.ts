@@ -8,11 +8,13 @@ import {
 } from '@nestjs/common';
 import { ReportService } from './report.service';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { AuthGuard } from 'src/login/guards/auth.guard';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
 @ApiTags('Report Controller')
+@UseInterceptors(CacheInterceptor)
 @Controller('/report')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}

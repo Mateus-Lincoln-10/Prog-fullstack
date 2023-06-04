@@ -22,11 +22,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/login/guards/auth.guard';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import { VehicleDto } from './dto/vehicle.dto';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
 @ApiTags('Vehicle Controller')
+@UseInterceptors(CacheInterceptor)
 @Controller('/vehicle')
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
