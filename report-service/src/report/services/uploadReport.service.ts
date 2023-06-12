@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
 
 @Injectable()
 export class UploadHandlerService {
+  constructor(private configService: ConfigService) {}
   async uploadPdf(pdf: Buffer, filename: string) {
     const s3 = new S3({
-      region: process.env.REGION,
+      region: this.configService.get<string>('REGION'),
       credentials: {
-        accessKeyId: process.env.S3_ACCESS_KEY,
-        secretAccessKey: process.env.S3_SECRET_KEY,
+        accessKeyId: this.configService.get<string>('S3_ACCESS_KEY'),
+        secretAccessKey: this.configService.get<string>('S3_SECRET_KEY'),
       },
     });
 
     const s3Params = {
-      Bucket: process.env.BUCKET,
+      Bucket: this.configService.get<string>('BUCKET'),
       Key: `/public/${filename}`,
       Body: pdf,
       ContentType: 'application/pdf',
@@ -28,6 +30,6 @@ export class UploadHandlerService {
       })
       .promise();
 
-    return report;
+    return report.Location;
   }
 }
