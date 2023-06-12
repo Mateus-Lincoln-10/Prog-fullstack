@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [],
-  controllers: [ReportController, ReportController],
-  providers: [ReportService, ReportService],
+  controllers: [ReportController],
+  providers: [ReportService],
 })
 export class ReportModule {}
