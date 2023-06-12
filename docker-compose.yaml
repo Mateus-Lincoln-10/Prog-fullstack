@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 
 services:
   
@@ -12,6 +12,8 @@ services:
       - db-auth:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - mynetwork
 
   db-vehicle:
     image: postgres
@@ -23,6 +25,8 @@ services:
       - db-vehicle:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - mynetwork
 
   db-report:
     image: postgres
@@ -33,19 +37,26 @@ services:
     volumes:
       - db-report:/var/lib/postgresql/data
     ports:
-      - "5434:5432"    
+      - "5434:5432"
+    networks:
+      - mynetwork
 
   api:
     build: ./backend
     ports:
       - "9001:9001"
+    networks:
+      - mynetwork
 
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
+    networks:
+      - mynetwork
     depends_on:
       - api
+  
   redis:
     image: redis
     ports:
@@ -64,6 +75,8 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=123456
+    networks:
+      - mynetwork
 
 networks:
   mynetwork:
