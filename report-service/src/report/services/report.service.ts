@@ -1,62 +1,57 @@
 import { Injectable } from '@nestjs/common';
-import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Report } from '../models/report.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { join } from 'path';
+import { UploadHandlerService } from './uploadReport.service';
+import { PdfConverterService } from './pdfConverter.service';
+import { ReportTemplate } from '../models/report.template';
+import { randomUUID } from 'crypto';
+import { ReportNotificationGateway } from './report-notification.gateway';
+import { HttpService } from '@nestjs/axios';
 import { VehicleDto } from '../models/vehicle.dto';
-
-export interface ListReportsResponse {
-  reportUrl: string[];
-}
-
-export interface Search {
-  search: string;
-}
-
-export interface ListVehicleResponse {
-  vehicles: VehicleDto[];
-}
-
-interface VehicleService {
-  listVehicles(search: Search): Observable<ListVehicleResponse>;
-}
+import { AxiosResponse } from 'axios';
 
 @Injectable()
 export class ReportService {
   constructor(
     @InjectRepository(Report)
     private readonly repo: Repository<Report>,
+    private readonly uploadService: UploadHandlerService,
+    private readonly pdfService: PdfConverterService,
+    private readonly notificationService: ReportNotificationGateway,
+    private readonly http: HttpService,
   ) {}
-  private vehicleGrpc: VehicleService;
 
-  @Client({
-    transport: Transport.GRPC,
-    options: {
-      package: 'vehicle',
-      protoPath: join(__dirname, './vehicle.proto'),
-    },
-  })
-  private client: ClientGrpc;
-
-  onModuleInit() {
-    this.vehicleGrpc = this.client.getService<VehicleService>('VehicleService');
-  }
-
-  listAllVehicles() {
-    return this.vehicleGrpc.listVehicles({ search: '' });
+  async listAllVehicles(): Promise<AxiosResponse<VehicleDto[]>> {
+    const search = '';
+    return firstValueFrom(
+      this.http.get('http://localhost:9002/vehicles', {
+        params: { search },
+      }),
+    );
   }
 
   async listReports() {
     const reports = await this.repo.find();
-    const reportsResponse: ListReportsResponse = {
-      reportUrl: reports.map((e) => e.reportUrl),
-    };
-    return reportsResponse;
+    return { reports };
+  }
+
+  async saveReport(reportUrl: string) {
+    const report = new Report();
+    report.reportUrl = reportUrl;
+
+    await this.repo.save(report);
+    console.log(report);
   }
 
   async generateReports() {
-    console.log(`chegou`);
+    const report = new ReportTemplate();
+    const vehicleresponse = await this.listAllVehicles();
+    const data = report.getHTML(vehicleresponse.data);
+    const pdf = await this.pdfService.convertToPdf(data);
+    const filename = randomUUID();
+    const reportUrl = await this.uploadService.uploadPdf(pdf, filename);
+    await this.saveReport(reportUrl);
   }
 }
