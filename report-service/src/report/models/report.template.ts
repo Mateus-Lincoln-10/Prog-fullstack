@@ -1,6 +1,28 @@
+import { VehicleDto } from './vehicle.dto';
+
 export class ReportTemplate {
-  getHTML() {
-    `
+  getVehicles(vehicles: VehicleDto[]) {
+    let vehicleBlock = '';
+
+    for (let vehicleIndex = 0; vehicleIndex < vehicles.length; vehicleIndex++) {
+      const vehicle = vehicles[vehicleIndex];
+      vehicleBlock += `
+      <h2>Dados do Veículo ${vehicleIndex + 1}:</h2>
+      <ul>
+        <li><strong>ID:</strong> <span>${vehicle.vehicleId}</span></li>
+        <li><strong>Placa:</strong> <span>${vehicle.vehiclePlate}</span></li>
+        <li><strong>Cor:</strong> <span>${vehicle.vehicleColor}</span></li>
+        <li><strong>Modelo:</strong> <span>${vehicle.vehicleModel}</span></li>
+        <li><strong>Marca:</strong> <span>${vehicle.vehicleBrand}</span></li>
+        <li><strong>Ano:</strong> <span>${vehicle.vehicleYear}</span></li>
+      </ul>
+      `;
+    }
+    return vehicleBlock;
+  }
+
+  getHTML(vehicles: VehicleDto[]) {
+    const string = `
     <!DOCTYPE html>
     <html>
 
@@ -49,19 +71,11 @@ export class ReportTemplate {
     <body>
       <h1>Listagem de Veículos</h1>
 
-      <h2>Dados do Veículo ${vehicleIndex}:</h2>
-      <ul>
-        <li><strong>ID:</strong> <span> ${vehicleId}</span></li>
-        <li><strong>Placa:</strong> <span>${vehiclePlate}</span></li>
-        <li><strong>Cor:</strong> <span>${vehicleColor}</span></li>
-        <li><strong>Modelo:</strong> <span>${vehicleModel}</span></li>
-        <li><strong>Marca:</strong> <span>${vehicleBrand}</span></li>
-        <li><strong>Data de Criação:</strong> <span>${vehicleBrand}</span></li>
-        <li><strong>Ano:</strong> <span>${vehicleYear}</span></li>
-      </ul>
+        ${this.getVehicles(vehicles)}
 
     </body>
     </html>
     `;
+    return string;
   }
 }
