@@ -5,18 +5,15 @@ import {
   HttpStatus,
   Post,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ReportService } from './report.service';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 import { AuthGuard } from 'src/login/guards/auth.guard';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
 @ApiTags('Report Controller')
-@UseInterceptors(CacheInterceptor)
 @Controller('/report')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}

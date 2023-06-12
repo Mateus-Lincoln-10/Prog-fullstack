@@ -25,6 +25,5 @@ async function bootstrap() {
     },
   });
   await app.startAllMicroservices();
-  console.log('bootstrap');
 }
 bootstrap();

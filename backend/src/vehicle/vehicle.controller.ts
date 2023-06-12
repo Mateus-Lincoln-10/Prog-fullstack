@@ -8,7 +8,6 @@ import {
   Post,
   Query,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleService } from './vehicle.service';
@@ -24,7 +23,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/login/guards/auth.guard';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 import { VehicleDto } from './dto/vehicle.dto';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { sanitize } from 'class-sanitizer';
@@ -32,7 +30,6 @@ import { sanitize } from 'class-sanitizer';
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard)
 @ApiTags('Vehicle Controller')
-@UseInterceptors(CacheInterceptor)
 @Controller('/vehicle')
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
@@ -81,7 +78,7 @@ export class VehicleController {
   @ApiNoContentResponse({
     schema: {
       example: {
-        statusCode: 202,
+        statusCode: 204,
         message: `Failed to get vehicle list: No vehicle found`,
       },
     },
@@ -96,7 +93,7 @@ export class VehicleController {
   async findAllVehicles(@Query('search') search = '') {
     try {
       sanitize(search);
-      return (await this.vehicleService.listVehicles(search)).vehicles;
+      return await this.vehicleService.listVehicles(search);
     } catch (e) {
       Logger.error('Failed to find vehicles');
     }
