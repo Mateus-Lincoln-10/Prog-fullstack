@@ -1,15 +1,17 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable } from '@nestjs/common';
 import { Client, ClientGrpc, ClientProxy } from '@nestjs/microservices';
 import { grpcReportOptions } from './grpc-report.options';
 import { Observable, firstValueFrom } from 'rxjs';
 import { rmqReportOptions } from './rmq-report.options';
+import { randomUUID } from 'crypto';
 
+interface Report {
+  reportId: string;
+  reportUrl: string;
+  reportCreatedAt: string;
+}
 export interface ListReportsResponse {
-  reportUrl: string[];
+  reports: Report[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -34,7 +36,7 @@ export class ReportService {
   }
 
   createReport() {
-    this.reportRmqClient.emit('report', 'allReports');
+    this.reportRmqClient.emit('report', randomUUID());
     return 'Message Sent successfuly';
   }
 

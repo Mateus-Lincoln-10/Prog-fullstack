@@ -8,6 +8,12 @@ service ReportService {
 
 message Empty {}
 
+message Report {
+    string reportId = 1;
+    string reportUrl = 2;
+    string reportCreatedAt = 3;
+}
+
 message ListReports {
-    repeated string reportUrl = 1;
+    repeated string reports = 1;
 }

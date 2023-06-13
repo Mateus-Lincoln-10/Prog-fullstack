@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReportModule } from './report/report.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ReportModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -19,6 +20,7 @@ import { ReportModule } from './report/report.module';
         connectionLimit: 5,
       },
     }),
+    ReportModule,
   ],
 })
 export class AppModule {}

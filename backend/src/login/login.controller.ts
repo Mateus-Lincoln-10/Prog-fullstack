@@ -5,12 +5,10 @@ import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { CreateAccountDto } from './dto/createAccount.dto';
-import { LoginEntity } from './login.entity';
 
 @ApiTags('Login Controller')
 @Controller()

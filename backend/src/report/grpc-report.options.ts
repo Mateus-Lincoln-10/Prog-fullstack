@@ -6,5 +6,6 @@ export const grpcReportOptions: ClientOptions = {
   options: {
     package: 'report',
     protoPath: join(__dirname, '../report/report.proto'),
+    url: 'localhost:5001',
   },
 };

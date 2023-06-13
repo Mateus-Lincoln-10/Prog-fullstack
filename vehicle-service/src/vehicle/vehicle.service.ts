@@ -1,11 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VehicleEntity } from './entities/vehicle.entity';
 import { ILike, Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleAssembler } from './vehicleAssembler.service';
 import { VehicleDto } from './dto/vehicle.dto';
-import { ListVehicleResponse } from './interfaces/vehicles-proto.interface';
 
 @Injectable()
 export class VehicleService {
@@ -27,24 +26,18 @@ export class VehicleService {
     return this.assembler.toModelDto(newVehicle);
   }
 
-  async listVehicles(search: string): Promise<ListVehicleResponse> {
+  async listVehicles(search: string): Promise<VehicleDto[]> {
     try {
       const vehicles = await this.repo.find({
         where: {
           vehicleModel: ILike(`%${search}%`),
         },
       });
-      if (vehicles.length === 0) {
-        throw new HttpException('No vehicle found', HttpStatus.NO_CONTENT);
-      }
-      const vehicleList = vehicles.map((e) => this.assembler.toModelDto(e));
-      const vehicleListResponse: ListVehicleResponse = { vehicles: null };
-      vehicleListResponse.vehicles = vehicleList;
-      return vehicleListResponse;
+      return vehicles.map((e) => this.assembler.toModelDto(e));
     } catch (error) {
       Logger.error(error);
-      Logger.error(`Failed to get vehicle list: ${error.message}`);
-      throw error;
+      Logger.error(`Failed to get vehicle list`);
+      throw new BadRequestException();
     }
   }
 }

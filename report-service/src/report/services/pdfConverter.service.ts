@@ -3,11 +3,11 @@ import * as puppeteer from 'puppeteer';
 @Injectable()
 export class PdfConverterService {
   async convertToPdf(data: any): Promise<Buffer> {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(0);
 
-    await page.setContent(data.html);
+    await page.setContent(data);
 
     const pdf = await page.pdf({
       format: 'A4',

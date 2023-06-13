@@ -1,24 +1,35 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Logger,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { VehicleService } from './vehicle.service';
 import { VehicleDto } from './dto/vehicle.dto';
-import { GrpcMethod } from '@nestjs/microservices';
-import { Observable, from } from 'rxjs';
-import {
-  ListVehicleResponse,
-  Search,
-} from './interfaces/vehicles-proto.interface';
-@Controller()
+@Controller('/vehicles')
 export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
 
-  @GrpcMethod('VehicleService', 'createVehicle')
-  createVehicle(createVehicle: CreateVehicleDto): Observable<VehicleDto> {
-    return from(this.vehicleService.createVehicle(createVehicle));
+  @Post()
+  async createVehicle(createVehicle: CreateVehicleDto): Promise<VehicleDto> {
+    try {
+      return await this.vehicleService.createVehicle(createVehicle);
+    } catch (e) {
+      Logger.error(e);
+      throw new BadRequestException();
+    }
   }
 
-  @GrpcMethod('VehicleService', 'listVehicles')
-  listVehicles({ search }: Search): Observable<ListVehicleResponse> {
-    return from(this.vehicleService.listVehicles(search));
+  @Get()
+  async listVehicles(@Query('search') search = ''): Promise<VehicleDto[]> {
+    try {
+      return await this.vehicleService.listVehicles(search);
+    } catch (e) {
+      Logger.error(e);
+      throw new BadRequestException();
+    }
   }
 }
