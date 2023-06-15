@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
   Logger,
@@ -14,7 +15,9 @@ export class VehicleController {
   constructor(private readonly vehicleService: VehicleService) {}
 
   @Post()
-  async createVehicle(createVehicle: CreateVehicleDto): Promise<VehicleDto> {
+  async createVehicle(
+    @Body() createVehicle: CreateVehicleDto,
+  ): Promise<VehicleDto> {
     try {
       return await this.vehicleService.createVehicle(createVehicle);
     } catch (e) {

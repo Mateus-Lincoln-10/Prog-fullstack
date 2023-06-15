@@ -1,31 +1,21 @@
+import { RedisModule } from './redis/redis.module';
 import { ReportModule } from './report/report.module';
 import { LoginModule } from './login/login.module';
-import { Module } from '@nestjs/common';
+import { CacheStore, Module } from '@nestjs/common';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { redisStore } from 'cache-manager-redis-yet';
+import { RedisClientOptions } from 'redis';
+import { CacheModule } from '@nestjs/cache-manager';
 @Module({
   imports: [
+    RedisModule,
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,
     }),
-    // CacheModule.registerAsync<RedisClientOptions>({
-    //   imports: [ConfigModule],
-    //   useFactory: async (config: ConfigService) => {
-    //     const store = await redisStore({
-    //       socket: {
-    //         host: config.get('REDIS_HOST'),
-    //         port: +config.get('REDIS_PORT'),
-    //       },
-    //     });
-    //     return {
-    //       store: store as unknown as CacheStore,
-    //       ttl: 60,
-    //     };
-    //   },
-    //   inject: [ConfigService],
-    // }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

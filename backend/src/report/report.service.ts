@@ -4,6 +4,7 @@ import { grpcReportOptions } from './grpc-report.options';
 import { Observable, firstValueFrom } from 'rxjs';
 import { rmqReportOptions } from './rmq-report.options';
 import { randomUUID } from 'crypto';
+import { RedisService } from 'src/redis/redis.service';
 
 interface Report {
   reportId: string;
@@ -23,6 +24,7 @@ interface ReportGrpcService {
 
 @Injectable()
 export class ReportService {
+  constructor(private readonly redis: RedisService) {}
   private reportGrpcService: ReportGrpcService;
   @Client(grpcReportOptions)
   private reportGrpcClient: ClientGrpc;
@@ -35,12 +37,24 @@ export class ReportService {
       this.reportGrpcClient.getService<ReportGrpcService>('ReportService');
   }
 
-  createReport() {
+  async createReport() {
     this.reportRmqClient.emit('report', randomUUID());
+    await this.redis.removeKey('reports');
     return 'Message Sent successfuly';
   }
 
   async listReports() {
-    return await firstValueFrom(this.reportGrpcService.listReports({}));
+    const response = await this.redis.getKey('reports');
+
+    if (response) {
+      return response;
+    }
+
+    const handleReports = await firstValueFrom(
+      this.reportGrpcService.listReports({}),
+    );
+
+    await this.redis.saveKey('reports', handleReports);
+    return handleReports;
   }
 }
