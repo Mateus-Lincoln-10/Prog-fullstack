@@ -1,4 +1,3 @@
-import { RedisService } from './../../backend/src/redis/redis.service';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VehicleModule } from './vehicle/vehicle.module';
@@ -22,6 +21,6 @@ import { VehicleModule } from './vehicle/vehicle.module';
     }),
   ],
   controllers: [],
-  providers: [RedisService],
+  providers: [],
 })
 export class AppModule {}
