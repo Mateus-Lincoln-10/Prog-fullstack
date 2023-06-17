@@ -20,7 +20,7 @@ export class VehicleService {
     try {
       await this.redis.removeKey('vehicles');
       return firstValueFrom(
-        this.http.post('http://localhost:9002/vehicles', createVehicle),
+        this.http.post('https://localhost:9002/vehicles', createVehicle),
       );
     } catch (e) {
       Logger.error('Failed to create vehicle');
@@ -37,7 +37,7 @@ export class VehicleService {
       }
 
       const response = await firstValueFrom(
-        this.http.get('http://localhost:9002/vehicles', {
+        this.http.get('https://localhost:9002/vehicles', {
           params: { search },
         }),
       );
