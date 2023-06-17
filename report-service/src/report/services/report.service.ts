@@ -26,7 +26,7 @@ export class ReportService {
   async listAllVehicles(): Promise<AxiosResponse<VehicleDto[]>> {
     const search = '';
     return firstValueFrom(
-      this.http.get('http://localhost:9002/vehicles', {
+      this.http.get('https://localhost:9002/vehicles', {
         params: { search },
       }),
     );
