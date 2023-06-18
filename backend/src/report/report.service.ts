@@ -54,7 +54,7 @@ export class ReportService {
       this.reportGrpcService.listReports({}),
     );
 
-    await this.redis.saveKey('reports', handleReports);
-    return handleReports;
+    await this.redis.saveKey('reports', handleReports.reports);
+    return handleReports.reports;
   }
 }

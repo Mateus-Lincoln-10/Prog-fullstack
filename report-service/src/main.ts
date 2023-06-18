@@ -2,9 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import * as fs from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const httpsOptions = {
+    key: fs.readFileSync('../cert/private.key'),
+    cert: fs.readFileSync('../cert/certificate.crt'),
+  };
+  const app = await NestFactory.create(AppModule, { httpsOptions });
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
@@ -25,5 +30,7 @@ async function bootstrap() {
     },
   });
   await app.startAllMicroservices();
+
+  await app.listen(9003);
 }
 bootstrap();

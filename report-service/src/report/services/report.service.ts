@@ -7,10 +7,11 @@ import { UploadHandlerService } from './uploadReport.service';
 import { PdfConverterService } from './pdfConverter.service';
 import { ReportTemplate } from '../models/report.template';
 import { randomUUID } from 'crypto';
-import { ReportNotificationGateway } from './report-notification.gateway';
 import { HttpService } from '@nestjs/axios';
 import { VehicleDto } from '../models/vehicle.dto';
+import https from 'https';
 import { AxiosResponse } from 'axios';
+import { ReportGateway } from '../events/report.gateway';
 
 @Injectable()
 export class ReportService {
@@ -19,7 +20,7 @@ export class ReportService {
     private readonly repo: Repository<Report>,
     private readonly uploadService: UploadHandlerService,
     private readonly pdfService: PdfConverterService,
-    private readonly notificationService: ReportNotificationGateway,
+    private readonly notificationService: ReportGateway,
     private readonly http: HttpService,
   ) {}
 
@@ -28,6 +29,9 @@ export class ReportService {
     return firstValueFrom(
       this.http.get('https://localhost:9002/vehicles', {
         params: { search },
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false,
+        }),
       }),
     );
   }
@@ -40,9 +44,7 @@ export class ReportService {
   async saveReport(reportUrl: string) {
     const report = new Report();
     report.reportUrl = reportUrl;
-
     await this.repo.save(report);
-    console.log(report);
   }
 
   async generateReports() {
@@ -53,5 +55,6 @@ export class ReportService {
     const filename = randomUUID();
     const reportUrl = await this.uploadService.uploadPdf(pdf, filename);
     await this.saveReport(reportUrl);
+    this.notificationService.sendNotification();
   }
 }

@@ -21,6 +21,5 @@ import { VehicleModule } from './vehicle/vehicle.module';
     }),
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule {}
