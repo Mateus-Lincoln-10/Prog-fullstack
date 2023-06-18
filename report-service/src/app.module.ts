@@ -1,3 +1,4 @@
+import { EventsModule } from './report/events/events.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReportModule } from './report/report.module';
@@ -5,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    EventsModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
