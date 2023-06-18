@@ -15,5 +15,5 @@ message Report {
 }
 
 message ListReports {
-    repeated string reports = 1;
+    repeated Report reports = 1;
 }
