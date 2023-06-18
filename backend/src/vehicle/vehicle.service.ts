@@ -8,6 +8,7 @@ import { CreateVehicleDto } from './dto/createVehicle.dto';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { RedisService } from 'src/redis/redis.service';
+import https from 'https';
 
 @Injectable()
 export class VehicleService {
@@ -19,9 +20,14 @@ export class VehicleService {
   async createVehicle(createVehicle: CreateVehicleDto) {
     try {
       await this.redis.removeKey('vehicles');
-      return firstValueFrom(
-        this.http.post('https://localhost:9002/vehicles', createVehicle),
+      const response = await firstValueFrom(
+        this.http.post('https://localhost:9002/vehicles', createVehicle, {
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
+        }),
       );
+      return response.data;
     } catch (e) {
       Logger.error('Failed to create vehicle');
       throw new BadRequestException('Failed to create vehicle');
@@ -39,6 +45,9 @@ export class VehicleService {
       const response = await firstValueFrom(
         this.http.get('https://localhost:9002/vehicles', {
           params: { search },
+          httpsAgent: new https.Agent({
+            rejectUnauthorized: false,
+          }),
         }),
       );
 

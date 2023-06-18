@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import { ReportNotificationGateway } from './report-notification.gateway';
 import { HttpService } from '@nestjs/axios';
 import { VehicleDto } from '../models/vehicle.dto';
+import https from 'https';
 import { AxiosResponse } from 'axios';
 
 @Injectable()
@@ -28,6 +29,9 @@ export class ReportService {
     return firstValueFrom(
       this.http.get('https://localhost:9002/vehicles', {
         params: { search },
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false,
+        }),
       }),
     );
   }
