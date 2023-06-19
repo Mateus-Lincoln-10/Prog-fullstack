@@ -43,11 +43,11 @@ const ReportList = () => {
         </tr>
       </thead>
       <tbody>
-      {/*
           <tr key={reportId}>
-            <td>{vehiclePlate}</td>
+            <td>{report.reportId}</td>
+            <td>{report.reportUrl}</td>
+            <td>{report.reportCreateAt}</td>
           </tr>
-        ))} */}
       </tbody>
     </table>
     </C.Container>
