@@ -165,6 +165,36 @@ export const Container = styled.div`
   line-height: 20px;
 }
 
+.generate_report {
+  border: none;
+  border-radius: 4px;
+  width: 18%;
+  height: 40px;
+  padding-top: 0.6rem;
+  padding-left: 4rem;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #4A76DC;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.see_reports {
+  border: none;
+  border-radius: 4px;
+  width: 18%;
+  height: 40px;
+  padding-top: 0.6rem;
+  padding-left: 4rem;
+  text-decoration: none;
+  color: #393c41;
+  background-color: #4D463F;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .expandMore {
   margin-left: 49vw;
   margin-top: 2rem;
@@ -173,3 +203,5 @@ export const Container = styled.div`
 }
 
 `;
+
+

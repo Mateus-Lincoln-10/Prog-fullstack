@@ -48,6 +48,8 @@ const Home = () => {
         <div className="buttons">
           <Link to="/publication" className="orderNow"> Publicar veículo </Link>
           <Link to="/search-vehicle" className="demoDrive"> Pesquisar veículos </Link>
+          <button className="generate_report"> Gerar relatório </button>
+          <Link to="/generate-report" className="see_reports"> Ver relatórios </Link>
         </div>
 
         <img className="expandMore" src={ExpandMore} alt="Icon" />
@@ -57,3 +59,4 @@ const Home = () => {
 };
 
 export default Home;
+

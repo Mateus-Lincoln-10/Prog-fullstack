@@ -4,6 +4,7 @@ import Signin from "../pages/Signin/Signin";
 import Signup from "../pages/Signup/Signup";
 import PublicationVehicle from "../pages/PublicationVehicle/PublicationVehicle";
 import SearchVehicle from "../pages/SearchVehicle/SearchVehicle";
+import GenerateReport from "../pages/GenerateReport/GenerateReport";
 import { useAuth } from "../hooks/useAuth";
 
 const PrivateRoute = ({ element: Component, ...props }) => {
@@ -13,7 +14,7 @@ const PrivateRoute = ({ element: Component, ...props }) => {
 };
 
 const RoutesApp = () => {
-  //bruxaria não mexa
+  //bruxaria não mexa "Só sei que nada sei"
   return (
     <Router>
       <Routes>
@@ -23,6 +24,7 @@ const RoutesApp = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/publication" element={<PublicationVehicle />} />
           <Route path="/search-vehicle" element={<SearchVehicle />} />
+          <Route path="/generate-report" element={<GenerateReport />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
@@ -31,3 +33,4 @@ const RoutesApp = () => {
 };
 
 export default RoutesApp;
+
