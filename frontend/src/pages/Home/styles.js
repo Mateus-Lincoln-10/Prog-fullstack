@@ -170,8 +170,8 @@ export const Container = styled.div`
   border-radius: 4px;
   width: 18%;
   height: 40px;
-  padding-top: 0.6rem;
-  padding-left: 4rem;
+  text-align:center;
+  padding-top: 5px;
   text-decoration: none;
   color: #ffffff;
   background-color: #4A76DC;
@@ -185,10 +185,10 @@ export const Container = styled.div`
   border-radius: 4px;
   width: 18%;
   height: 40px;
-  padding-top: 0.6rem;
-  padding-left: 4rem;
   text-decoration: none;
-  color: #393c41;
+  text-align:center;
+  padding-top: 10px;
+  color: #fff;
   background-color: #4D463F;
   font-weight: 700;
   font-size: 14px;

@@ -22,7 +22,7 @@ export class ReportController {
     const channel = context.getChannelRef();
     const originalMsg = context.getMessage();
 
-    await this.reportService.generateReports();
     channel.ack(originalMsg);
+    await this.reportService.generateReports();
   }
 }
