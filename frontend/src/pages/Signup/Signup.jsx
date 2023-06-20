@@ -24,10 +24,9 @@ const Signup = () => {
 
     api.post('/register', {email, password: senha}).then(res => {
           navigate("/");
-
     }).catch(e => {
       console.log(e);
-      toast.error(e.response.data.message, {
+      toast.error(e.response.data.message[0], {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
