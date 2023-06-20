@@ -5,8 +5,23 @@ import Background from "../../images/background.png";
 import Logo from "../../images/logo.png";
 import ExpandMore from "../../images/expand_more.svg"
 import { Link } from 'react-router-dom';
+import api from './../../services/api';
+import { useAuth } from './../../hooks/useAuth';
 
 const Home = () => {
+  const { isLogged } = useAuth();
+  
+  const generateReport = async () => {
+    try {
+      await api.post('/report', null, {
+        headers: {
+          Authorization: `Bearer ${isLogged()}`
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return (
     <C.Container>
       <div className="banner">
@@ -48,7 +63,7 @@ const Home = () => {
         <div className="buttons">
           <Link to="/publication" className="orderNow"> Publicar veículo </Link>
           <Link to="/search-vehicle" className="demoDrive"> Pesquisar veículos </Link>
-          <button className="generate_report"> Gerar relatório </button>
+          <button className="generate_report" onClick={() => generateReport()}> Gerar relatório </button>
           <Link to="/generate-report" className="see_reports"> Ver relatórios </Link>
         </div>
 

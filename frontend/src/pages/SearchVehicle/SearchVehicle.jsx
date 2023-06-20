@@ -50,14 +50,14 @@ const SearchVehicle = () => {
         <span><C.Strong>Marca: </C.Strong> <C.Label>{vehicle.vehicleBrand}</C.Label></span>
       </C.Card>
     );
-  }, [searchVehicle]);
+  }, []);
 
   const cardList = useMemo(() => {
     if(vehicleList.length === 0) {
       return;
     }
     return vehicleList.map(handleCards);
-  }, [vehicleList]);
+  }, [handleCards, vehicleList]);
 
   return (
     <C.Container>
