@@ -9,7 +9,7 @@ import { ReportTemplate } from '../models/report.template';
 import { randomUUID } from 'crypto';
 import { HttpService } from '@nestjs/axios';
 import { VehicleDto } from '../models/vehicle.dto';
-import https from 'https';
+import * as https from 'https';
 import { AxiosResponse } from 'axios';
 import { ReportGateway } from '../events/report.gateway';
 

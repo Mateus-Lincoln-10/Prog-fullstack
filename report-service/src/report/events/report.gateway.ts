@@ -1,6 +1,4 @@
 import {
-  MessageBody,
-  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
   OnGatewayConnection,
@@ -9,18 +7,12 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-@WebSocketGateway(81, { transports: ['websocket'] })
+@WebSocketGateway(81, { transports: ['websocket', 'polling'], cors: true })
 export class ReportGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   @WebSocketServer()
   server: Server;
-
-  @SubscribeMessage('events')
-  handleEvent(@MessageBody() data: string) {
-    console.log(data);
-    this.server.emit('events', data);
-  }
 
   handleConnection() {
     console.log('User connected');
@@ -35,6 +27,7 @@ export class ReportGateway
   }
 
   sendNotification() {
-    this.server.emit('report', 'Report generated successfully');
+    this.server.emit('report', { message: 'Report generated successfully' });
+    console.log('emited');
   }
 }
